@@ -19,7 +19,8 @@ public class ConnexionJPA {
 		transaction.begin();
 		
 		Region r = em.find(Region.class, 1);
-		System.out.println(r.getNom());
+		if(r != null)
+			System.out.println(r.getNom());
 		
 		Region r1 = new Region();
 		r1.setNom("Ile de France");
@@ -27,6 +28,7 @@ public class ConnexionJPA {
 		em.persist(r1);
 		
 		transaction.commit();
+		em.close();  // Vide le contexte de persistence
 	}
 
 }
