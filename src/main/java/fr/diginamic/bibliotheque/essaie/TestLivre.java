@@ -1,9 +1,12 @@
 package fr.diginamic.bibliotheque.essaie;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import fr.diginamic.bibliotheque.entite.Client;
 import fr.diginamic.bibliotheque.entite.Emprunt;
@@ -35,6 +38,14 @@ public class TestLivre {
 		Client client = em.find(Client.class, 3);
 		if(client != null) {
 			System.out.println(client.getEmprunt());
+		}
+		
+		TypedQuery<Livre> q1 = em.createQuery("SELECT l FROM Livre l JOIN l.emprunts e WHERE e.id=:param1", Livre.class);
+		q1.setParameter("param1", 2);
+		List<Livre> listeLivres = q1.getResultList();
+		
+		for(Livre livre1 : listeLivres) {
+			System.out.println(livre1);
 		}
 		
 		transaction.commit();
